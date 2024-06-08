@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playful Submit Button</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      background-color: #f0f0f0;
+    }
+    #playful-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      transition: transform 0.3s, left 0.3s, top 0.3s, box-shadow 0.3s;
+      position: absolute;
+      background-color: #4267B2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+<button id="playful-button">Click if you can!</button>
+
+<script>
+  const button = document.getElementById('playful-button');
+  let clickCount = 0;
+
+  function getRandomPosition() {
+    const bodyRect = document.body.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const maxX = bodyRect.width - buttonRect.width;
+    const maxY = bodyRect.height - buttonRect.height;
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+    return { x: randomX, y: randomY };
+  }
+
+  function moveButton() {
+    const { x, y } = getRandomPosition();
+    button.style.left = `${x}px`;
+    button.style.top = `${y}px`;
+  }
+
+  button.addEventListener('mouseover', moveButton);
+
+  button.addEventListener('click', () => {
+    clickCount++;
+    if (clickCount < 1) {
+      moveButton();
+    } else {
+      button.removeEventListener('mouseover', moveButton);
+      button.style.transition = 'none';
+      button.style.left = '50%';
+      button.style.top = '50%';
+      button.style.transform = 'translate(-50%, -50%)';
+      button.textContent = 'Submit';
+      button.onclick = () => alert('Submission link');
+    }
+  });
+
+  // Initial button position
+  moveButton();
+</script>
+
+</body>
+</html>

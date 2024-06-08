@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playful Submit Button</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    #container {
+      width: 500px;
+      height: 300px;
+      border: 2px solid #000;
+      position: relative;
+      overflow: hidden;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #playful-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      transition: transform 0.3s, left 0.3s, top 0.3s;
+      position: absolute;
+    }
+    #playful-button:hover {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <button id="playful-button">Click if you can!</button>
+</div>
+
+<script>
+  const button = document.getElementById('playful-button');
+  const container = document.getElementById('container');
+  let clickCount = 0;
+
+  function getRandomPosition() {
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const maxX = containerRect.width - buttonRect.width;
+    const maxY = containerRect.height - buttonRect.height;
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+    return { x: randomX, y: randomY };
+  }
+
+  function moveButton() {
+    const { x, y } = getRandomPosition();
+    button.style.left = `${x}px`;
+    button.style.top = `${y}px`;
+  }
+
+  button.addEventListener('mouseover', moveButton);
+
+  button.addEventListener('click', () => {
+    clickCount++;
+    if (clickCount === 1) {
+      button.textContent = 'No cheating!';
+    } else if (clickCount === 2) {
+      alert('Congratulations!');
+    }
+  });
+
+  // Initial button position
+  moveButton();
+</script>
+
+</body>
+</html>

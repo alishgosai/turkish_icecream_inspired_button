@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Playful Submit Button</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+    #container {
+      width: 500px;
+      height: 300px;
+      border: 2px solid #000;
+      position: relative;
+      overflow: hidden;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #playful-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      transition: transform 0.3s, opacity 0.1s;
+      position: absolute;
+      background-color: #4267B2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    #playful-button:hover {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <button id="playful-button">Click if you can!</button>
+</div>
+
+<script>
+  const button = document.getElementById('playful-button');
+  const container = document.getElementById('container');
+  let clickCount = 0;
+
+  function getRandomPosition() {
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const maxX = containerRect.width - buttonRect.width;
+    const maxY = containerRect.height - buttonRect.height;
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+    return { x: randomX, y: randomY };
+  }
+
+  function moveButton() {
+    const isVisible = Math.random() < 0.8; // 80% chance of being visible
+    if (isVisible) {
+      const { x, y } = getRandomPosition();
+      button.style.transitionDuration = '0.3s'; // Restore transition duration for reappearing
+      button.style.left = `${x}px`;
+      button.style.top = `${y}px`;
+      button.style.opacity = 1; // Ensure the button is visible
+    } else {
+      button.style.transitionDuration = '0s'; // Set transition duration to 0 for immediate disappearance
+      button.style.opacity = 0; // Hide the button
+    }
+  }
+
+  button.addEventListener('mouseover', moveButton);
+
+  button.addEventListener('click', () => {
+    clickCount++;
+    if (clickCount === 1) {
+      button.textContent = 'No cheating!';
+    } else if (clickCount === 2) {
+      alert('Congratulations you made it bruhhhh!');
+    }
+  });
+
+  // Initial button position
+  moveButton();
+</script>
+
+</body>
+</html>
